@@ -23,11 +23,3 @@
 
 ## Live Demo
 https://Samat4E.github.io/Lab9_Starter/
-
-## Usage
-1. Open `index.html` in browser.  
-2. Open DevTools → Console.  
-3. Click buttons and watch console output.
-
-## Repo
-https://github.com/Samat4E/Lab9_Starter
