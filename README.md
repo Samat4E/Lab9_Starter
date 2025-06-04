@@ -1,4 +1,4 @@
-# Lab 9 - Starter# Lab 9: JS Error Handling
+# Lab 9 - Starter#  JS Error Handling
 
 **Features (in `index.html`):**
 - **Error Calculator:** Enter two numbers + operator (`+ - * /`), click Calculate, see result.
