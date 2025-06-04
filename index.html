@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lab 9</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 9</title>
 
   <style>
     button {
@@ -42,7 +42,7 @@
       row-gap: 5px;
     }
 
-    #error-btns>* {
+    #error-btns > * {
       padding: 8px 2px;
       width: 122px;
     }
@@ -51,6 +51,7 @@
 
 <body>
   <main>
+    <!-- Error Calculator Form -->
     <form>
       <fieldset>
         <legend>Error Calculator</legend>
@@ -68,6 +69,7 @@
       </fieldset>
     </form>
 
+    <!-- Console‐Demo Buttons -->
     <section id="error-btns">
       <button>Console Log</button>
       <button>Console Error</button>
@@ -88,20 +90,149 @@
   </main>
 
   <script>
+    
+    // 1. Error Calculator Logic (prevent default form submit)
     let form = document.querySelector('form');
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
       let output = document.querySelector('output');
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
+      // Evaluate the expression and display the result
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
     });
 
+    //    This catches any uncaught exceptions and logs details.
+    
+    window.onerror = function (message, source, lineno, colno, errorObj) {
+      console.log('=== Global Error Caught ===');
+      console.log('Message:   ', message);
+      console.log('Source:    ', source);
+      console.log('Line:      ', lineno + ':' + colno);
+      console.log('Error Obj: ', errorObj);
+      // Return true to suppress the browser's default error message
+      return true;
+    };
+
+    
+    // 3. Grab all 15 buttons inside #error-btns
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
-    // Start your code here
-    // You may move this JS to another file if you wish
+    // 4. Destructure them into named variables in order
+    //   (Must match the exact order in the HTML above)
+    
+    const [
+      logBtn,        // index 0  “Console Log”
+      errorBtn,      // index 1  “Console Error”
+      countBtn,      // index 2  “Console Count”
+      warnBtn,       // index 3  “Console Warn”
+      assertBtn,     // index 4  “Console Assert”
+      clearBtn,      // index 5  “Console Clear”
+      dirBtn,        // index 6  “Console Dir”
+      dirxmlBtn,     // index 7  “Console dirxml”
+      groupStartBtn, // index 8  “Console Group Start”
+      groupEndBtn,   // index 9  “Console Group End”
+      tableBtn,      // index 10  “Console Table”
+      startTimerBtn, // index 11  “Start Timer”
+      endTimerBtn,   // index 12  “End Timer”
+      traceBtn,      // index 13  “Console Trace”
+      globalErrorBtn // index 14  “Trigger a Global Error”
+    ] = errorBtns;
+
+    // 5. Attach click‐handlers for each console demo
+
+    // 5.1  Console Log Demo
+    logBtn.addEventListener('click', () => {
+      console.log('--- console.log demo ---', { foo: 123, bar: 'abc' });
+    });
+
+    // 5.2  Console Error Demo
+    errorBtn.addEventListener('click', () => {
+      console.error('*** console.error demo ***');
+    });
+
+    // 5.3  Console Count Demo
+    countBtn.addEventListener('click', () => {
+      console.count('myCounter');
+    });
+
+    // 5.4  Console Warn Demo
+    warnBtn.addEventListener('click', () => {
+      console.warn('⚠️ console.warn demo: Be careful!');
+    });
+
+    // 5.5  Console Assert Demo
+    assertBtn.addEventListener('click', () => {
+      console.assert(2 + 2 === 5, ' console.assert demo: 2 + 2 is not 5');
+    });
+
+    // 5.6  Console Clear Demo
+    clearBtn.addEventListener('click', () => {
+      console.clear();
+    });
+
+    // 5.7  Console Dir Demo
+    dirBtn.addEventListener('click', () => {
+      let mainElement = document.querySelector('main');
+      console.dir(mainElement);
+    });
+
+    // 5.8  Console dirxml Demo
+    dirxmlBtn.addEventListener('click', () => {
+      let bodyElement = document.querySelector('body');
+      console.dirxml(bodyElement);
+    });
+
+    // 5.9  Console Group Start Demo
+    groupStartBtn.addEventListener('click', () => {
+      console.group('Group Start');
+      console.log('Inside group: item 1');
+      console.log('Inside group: item 2');
+      // Note: groupEnd() is called by the “Console Group End” button
+    });
+
+    // 5.10 Console Group End Demo
+    groupEndBtn.addEventListener('click', () => {
+      console.groupEnd();
+      console.log('Closed group');
+    });
+
+    // 5.11 Console Table Demo
+    tableBtn.addEventListener('click', () => {
+      const sampleData = [
+        { name: 'Alice', score: 92 },
+        { name: 'Bob', score: 85 },
+        { name: 'Carol', score: 97 }
+      ];
+      console.table(sampleData);
+    });
+
+    // 5.12 Start Timer Demo (begins timer “myTimer”)
+    startTimerBtn.addEventListener('click', () => {
+      console.time('myTimer');
+    });
+
+    // 5.13 End Timer Demo (ends timer “myTimer”)
+    endTimerBtn.addEventListener('click', () => {
+      console.timeEnd('myTimer');
+    });
+
+    // 5.14 Console Trace Demo
+    traceBtn.addEventListener('click', () => {
+      function x() { y(); }
+      function y() { z(); }
+      function z() {
+        console.trace('--- console.trace demo stack ---');
+      }
+      x();
+    });
+
+    // 5.15 Trigger a Global Error (undefined function call)
+    globalErrorBtn.addEventListener('click', () => {
+      undefinedFunctionDoesNotExist();
+    });
+
   </script>
 </body>
 
